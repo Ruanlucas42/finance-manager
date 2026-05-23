@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <h1> Finance Manager</h1>
+            <div class="resumo-cards" id="resumoCards">
+                <div class="card-resumo receita"><span>Receitas</span><strong id="totalReceita">R$ 0,00</strong></div>
+                <div class="card-resumo despesa"><span>Despesas</span><strong id="totalDespesa">R$ 0,00</strong></div>
+                <div class="card-resumo saldo"><span>Saldo</span><strong id="totalSaldo">R$ 0,00</strong></div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- CATEGORIAS -->
+        <section class="painel">
+            <h2>Categorias</h2>
+            <form id="formCategoria">
+                <input type="text" id="catNome" placeholder="Nome da categoria" required>
+                <select id="catTipo" required>
+                    <option value="">Tipo...</option>
+                    <option value="receita">Receita</option>
+                    <option value="despesa">Despesa</option>
+                </select>
+                <button type="submit">+ Adicionar</button>
+            </form>
+            <div class="filtros">
+                <input type="text" id="buscaCategoria" placeholder="🔍 Buscar categoria...">
+                <select id="filtroCatTipo">
+                    <option value="">Todos</option>
+                    <option value="receita">Receitas</option>
+                    <option value="despesa">Despesas</option>
+                </select>
+            </div>
+            <div id="listaCategorias" class="lista"></div>
+        </section>
+
+        <!-- TRANSAÇÕES -->
+        <section class="painel">
+            <h2>Transações</h2>
+            <form id="formTransacao">
+                <input type="text" id="transDesc" placeholder="Descrição" required>
+                <input type="number" id="transValor" placeholder="Valor (R$)" step="0.01" min="0.01" required>
+                <input type="date" id="transData" required>
+                <select id="transCat" required>
+                    <option value="">Categoria...</option>
+                </select>
+                <button type="submit">+ Adicionar</button>
+            </form>
+            <div class="filtros">
+                <input type="text" id="buscaTransacao" placeholder="🔍 Buscar transação...">
+                <select id="filtroTransTipo">
+                    <option value="">Todos</option>
+                    <option value="receita">Receitas</option>
+                    <option value="despesa">Despesas</option>
+                </select>
+                <input type="date" id="filtroDataInicio" title="Data início">
+                <input type="date" id="filtroDataFim" title="Data fim">
+            </div>
+            <div id="listaTransacoes" class="lista"></div>
+        </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script src="app.js"></script>
+</body>
+</html>
