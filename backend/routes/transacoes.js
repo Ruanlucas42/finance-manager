@@ -96,5 +96,40 @@ router.get('/resumo/geral', async (req, res) => {
         res.status(500).json({ erro: 'Erro ao calcular resumo.' });
     }
 });
+// UPDATE - Atualizar Transação
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { descricao, valor, data, categoria_id } = req.body;
 
+    if (!descricao || !valor || !data || !categoria_id) {
+        return res.status(400).json({ erro: 'Todos os campos são obrigatórios.' });
+    }
+
+    try {
+        // Verifica se a nova categoria existe
+        const [cat] = await db.execute('SELECT id FROM categorias WHERE id = ?', [categoria_id]);
+        if (cat.length === 0) return res.status(400).json({ erro: 'Categoria não encontrada.' });
+
+        const [result] = await db.execute(
+            'UPDATE transacoes SET descricao = ?, valor = ?, data = ?, categoria_id = ? WHERE id = ?',
+            [descricao.trim(), valor, data, categoria_id, id]
+        );
+        if (result.affectedRows === 0) return res.status(404).json({ erro: 'Transação não encontrada.' });
+        res.json({ id, descricao, valor, data, categoria_id });
+    } catch (err) {
+        res.status(500).json({ erro: 'Erro ao atualizar transação.', detalhe: err.message });
+    }
+});
+
+// DELETE - Deletar Transação
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [result] = await db.execute('DELETE FROM transacoes WHERE id = ?', [id]);
+        if (result.affectedRows === 0) return res.status(404).json({ erro: 'Transação não encontrada.' });
+        res.json({ mensagem: 'Transação deletada com sucesso.' });
+    } catch (err) {
+        res.status(500).json({ erro: 'Erro ao deletar transação.', detalhe: err.message });
+    }
+});
 module.exports = router;
