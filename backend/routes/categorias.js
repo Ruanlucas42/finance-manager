@@ -65,4 +65,46 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// UPDATE - Atualizar Categoria
+router.put('/:id', async (req, res) => {
+    const { nome, tipo } = req.body;
+    const { id } = req.params;
+
+    if (!nome || !tipo) {
+        return res.status(400).json({ erro: 'Nome e tipo são obrigatórios.' });
+    }
+    if (!['receita', 'despesa'].includes(tipo)) {
+        return res.status(400).json({ erro: 'Tipo deve ser "receita" ou "despesa".' });
+    }
+
+    try {
+        const [result] = await db.execute(
+            'UPDATE categorias SET nome = ?, tipo = ? WHERE id = ?',
+            [nome.trim(), tipo, id]
+        );
+        if (result.affectedRows === 0) return res.status(404).json({ erro: 'Categoria não encontrada.' });
+        res.json({ id, nome, tipo });
+    } catch (err) {
+        res.status(500).json({ erro: 'Erro ao atualizar categoria.', detalhe: err.message });
+    }
+});
+
+// DELETE - Deletar Categoria
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        // Validação se existem transações vinculadas a essa categoria antes de deletar
+        const [transacoes] = await db.execute('SELECT id FROM transacoes WHERE categoria_id = ?', [id]);
+        if (transacoes.length > 0) {
+            return res.status(400).json({ erro: 'Não é possível deletar uma categoria que possui transações vinculadas.' });
+        }
+
+        const [result] = await db.execute('DELETE FROM categorias WHERE id = ?', [id]);
+        if (result.affectedRows === 0) return res.status(404).json({ erro: 'Categoria não encontrada.' });
+        res.json({ mensagem: 'Categoria deletada com sucesso.' });
+    } catch (err) {
+        res.status(500).json({ erro: 'Erro ao deletar categoria.', detalhe: err.message });
+    }
+});
+
 module.exports = router;
