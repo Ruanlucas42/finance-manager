@@ -1,10 +1,10 @@
-# 💰 Finance Manager
+#  Finance Manager
 
 Aplicação web para gerenciamento de finanças pessoais. Permite cadastrar **categorias** e **transações financeiras**, com filtros, busca em tempo real e resumo do saldo atualizado automaticamente.
 
 ---
 
-## 🛠 Tecnologias
+##  Tecnologias
 
 - **Backend:** Node.js + Express.js
 - **Banco de Dados:** MySQL
@@ -12,7 +12,7 @@ Aplicação web para gerenciamento de finanças pessoais. Permite cadastrar **ca
 
 ---
 
-## 📁 Estrutura do Projeto
+##  Estrutura do Projeto
 
 ```
 finance-manager/
@@ -37,7 +37,7 @@ finance-manager/
 
 ---
 
-## ✅ Pré-requisitos
+##  Pré-requisitos
 
 - [Node.js](https://nodejs.org/) v18 ou superior
 - [MySQL](https://dev.mysql.com/downloads/workbench/) com MySQL Workbench
@@ -73,7 +73,7 @@ CREATE TABLE transacoes (
 
 ---
 
-## ⚙️ Configuração do Backend
+##  Configuração do Backend
 
 Clone o repositório e instale as dependências:
 
@@ -110,11 +110,11 @@ DB_NAME=finance_manager
 PORT=3000
 ```
 
-> ⚠️ O arquivo `.env` está no `.gitignore` e **não deve ser enviado ao repositório**.
+>  O arquivo `.env` está no `.gitignore` e **não deve ser enviado ao repositório**.
 
 ---
 
-## ▶️ Rodando a Aplicação
+##  Rodando a Aplicação
 
 **Backend** — dentro da pasta `backend/`:
 
